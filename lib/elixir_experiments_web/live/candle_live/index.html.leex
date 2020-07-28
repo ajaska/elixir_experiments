@@ -1,0 +1,35 @@
+<h1>Listing Candles</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, ElixirExperimentsWeb.CandleLive.FormComponent,
+    id: @candle.id || :new,
+    title: @page_title,
+    action: @live_action,
+    candle: @candle,
+    return_to: Routes.candle_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ip addr</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="candles">
+    <%= for candle <- @candles do %>
+      <tr id="candle-<%= candle.id %>">
+        <td><%= candle.ip_addr %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.candle_show_path(@socket, :show, candle) %></span>
+          <span><%= live_patch "Edit", to: Routes.candle_index_path(@socket, :edit, candle) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: candle.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Candle", to: Routes.candle_index_path(@socket, :new) %></span>

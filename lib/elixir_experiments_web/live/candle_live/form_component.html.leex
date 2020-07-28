@@ -1,0 +1,13 @@
+<h2><%= @title %></h2>
+
+<%= f = form_for @changeset, "#",
+  id: "candle-form",
+  phx_target: @myself,
+  phx_change: "validate",
+  phx_submit: "save" %>
+
+  <!-- If we don't have at least one tag, things break because we don't send any values -->
+  <%= hidden_input(f, :test) %>
+
+  <%= submit "Light a candle", phx_disable_with: "Saving..." %>
+</form>

@@ -1,0 +1,22 @@
+<h1>Show Candle</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, ElixirExperimentsWeb.CandleLive.FormComponent,
+    id: @candle.id,
+    title: @page_title,
+    action: @live_action,
+    candle: @candle,
+    return_to: Routes.candle_show_path(@socket, :show, @candle) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Ip addr:</strong>
+    <%= @candle.ip_addr %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.candle_show_path(@socket, :edit, @candle), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.candle_index_path(@socket, :index) %></span>
