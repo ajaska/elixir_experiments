@@ -14,7 +14,6 @@
     <tr>
       <th>Ip addr</th>
       <th>Inserted At</th>
-      <th></th>
     </tr>
   </thead>
   <tbody id="candles">
@@ -22,12 +21,6 @@
       <tr id="candle-<%= candle.id %>">
         <td><%= candle.ip_addr %></td>
         <td><%= candle.inserted_at %></td>
-
-        <td>
-          <span><%= live_redirect "Show", to: Routes.candle_show_path(@socket, :show, candle) %></span>
-          <span><%= live_patch "Edit", to: Routes.candle_index_path(@socket, :edit, candle) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: candle.id, data: [confirm: "Are you sure?"] %></span>
-        </td>
       </tr>
     <% end %>
   </tbody>

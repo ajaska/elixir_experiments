@@ -22,9 +22,6 @@ defmodule ElixirExperimentsWeb.Router do
     live "/candles", CandleLive.Index, :index
     live "/candles/new", CandleLive.Index, :new
     live "/candles/:id/edit", CandleLive.Index, :edit
-
-    live "/candles/:id", CandleLive.Show, :show
-    live "/candles/:id/show/edit", CandleLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.

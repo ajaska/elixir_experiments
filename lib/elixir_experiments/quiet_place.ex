@@ -53,26 +53,7 @@ defmodule ElixirExperiments.QuietPlace do
     %Candle{}
     |> Candle.changeset(attrs)
     |> Repo.insert()
-    |> broadcast(:post_created)
-  end
-
-  @doc """
-  Updates a candle.
-
-  ## Examples
-
-      iex> update_candle(candle, %{field: new_value})
-      {:ok, %Candle{}}
-
-      iex> update_candle(candle, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_candle(%Candle{} = candle, attrs) do
-    candle
-    |> Candle.changeset(attrs)
-    |> Repo.update()
-    |> broadcast(:post_updated)
+    |> broadcast(:candle_created)
   end
 
   @doc """
