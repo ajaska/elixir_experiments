@@ -15,35 +15,20 @@ defmodule ElixirExperimentsWeb.CandleLive.Index do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  defp apply_action(socket, :edit, %{"id" => id}) do
-    socket
-    |> assign(:page_title, "Edit Candle")
-    |> assign(:candle, QuietPlace.get_candle!(id))
-  end
-
-  defp apply_action(socket, :new, _params) do
-    socket
-    |> assign(:page_title, "New Candle")
-    |> assign(:candle, %Candle{})
-  end
-
   defp apply_action(socket, :index, _params) do
     socket
     |> assign(:page_title, "Listing Candles")
     |> assign(:candle, nil)
   end
 
-  @impl true
-  def handle_event("delete", %{"id" => id}, socket) do
-    candle = QuietPlace.get_candle!(id)
-    {:ok, _} = QuietPlace.delete_candle(candle)
-
-    {:noreply, assign(socket, :candles, list_candles())}
+  def handle_event("new", _params, socket) do
+    QuietPlace.create_candle()
+    {:noreply, socket}
   end
 
   @impl true
   def handle_info({:candle_created, candle}, socket) do
-    {:noreply, assign(socket, :candles, fn candles -> [candle | candles] end)}
+    {:noreply, update(socket, :candles, fn candles -> [candle | candles] end)}
   end
 
   defp list_candles do

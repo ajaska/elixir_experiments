@@ -1,14 +1,5 @@
 <h1>A Quiet Place</h1>
 
-<%= if @live_action in [:new, :edit] do %>
-  <%= live_modal @socket, ElixirExperimentsWeb.CandleLive.FormComponent,
-    id: @candle.id || :new,
-    title: @page_title,
-    action: @live_action,
-    candle: @candle,
-    return_to: Routes.candle_index_path(@socket, :index) %>
-<% end %>
-
 <table>
   <thead>
     <tr>
@@ -26,4 +17,5 @@
   </tbody>
 </table>
 
-<span><%= live_patch "New Candle", to: Routes.candle_index_path(@socket, :new) %></span>
+
+<a href="#" phx-click="new">Light a candle...</a>
