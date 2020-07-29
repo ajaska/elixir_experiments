@@ -1,4 +1,4 @@
-<h1>Listing Candles</h1>
+<h1>A Quiet Place</h1>
 
 <%= if @live_action in [:new, :edit] do %>
   <%= live_modal @socket, ElixirExperimentsWeb.CandleLive.FormComponent,
@@ -13,7 +13,7 @@
   <thead>
     <tr>
       <th>Ip addr</th>
-
+      <th>Inserted At</th>
       <th></th>
     </tr>
   </thead>
@@ -21,6 +21,7 @@
     <%= for candle <- @candles do %>
       <tr id="candle-<%= candle.id %>">
         <td><%= candle.ip_addr %></td>
+        <td><%= candle.inserted_at %></td>
 
         <td>
           <span><%= live_redirect "Show", to: Routes.candle_show_path(@socket, :show, candle) %></span>

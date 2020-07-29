@@ -6,6 +6,7 @@ defmodule ElixirExperimentsWeb.CandleLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
+    if connected?(socket), do: QuietPlace.subscribe()
     {:ok, assign(socket, :candles, list_candles())}
   end
 
@@ -38,6 +39,11 @@ defmodule ElixirExperimentsWeb.CandleLive.Index do
     {:ok, _} = QuietPlace.delete_candle(candle)
 
     {:noreply, assign(socket, :candles, list_candles())}
+  end
+
+  @impl true
+  def handle_info({:candle_created, candle}, socket) do
+    {:noreply, assign(socket, :candles, fn candles -> [candle | candles] end)}
   end
 
   defp list_candles do

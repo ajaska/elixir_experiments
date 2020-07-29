@@ -53,6 +53,7 @@ defmodule ElixirExperiments.QuietPlace do
     %Candle{}
     |> Candle.changeset(attrs)
     |> Repo.insert()
+    |> broadcast(:post_created)
   end
 
   @doc """
@@ -71,6 +72,7 @@ defmodule ElixirExperiments.QuietPlace do
     candle
     |> Candle.changeset(attrs)
     |> Repo.update()
+    |> broadcast(:post_updated)
   end
 
   @doc """
@@ -100,5 +102,15 @@ defmodule ElixirExperiments.QuietPlace do
   """
   def change_candle(%Candle{} = candle, attrs \\ %{}) do
     Candle.changeset(candle, attrs)
+  end
+
+  def subscribe do
+    Phoenix.PubSub.subscribe(ElixirExperiments.PubSub, "candles")
+  end
+
+  defp broadcast({:error, _reason} = error, _event), do: error
+  defp broadcast({:ok, candle}, event) do
+    Phoenix.PubSub.broadcast(ElixirExperiments.PubSub, "candles", {event, candle})
+    {:ok, candle}
   end
 end
